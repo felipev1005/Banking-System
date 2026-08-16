@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "SavingsAccount.h"
 #include "CheckingAccount.h"
+#include "SavingsAccount.h"
 
 Bank::Bank()
     : nextAccountNumber(1001) {
@@ -65,6 +65,46 @@ const Account* Bank::findAccount(int accountNumber) const {
     }
 
     return nullptr;
+}
+
+bool Bank::depositToAccount(int accountNumber, double amount) {
+    Account* account = findAccount(accountNumber);
+
+    if (account == nullptr) {
+        std::cout << "Account not found.\n";
+        return false;
+    }
+
+    if (amount <= 0.0) {
+        std::cout << "Deposit amount must be greater than zero.\n";
+        return false;
+    }
+
+    account->deposit(amount);
+
+    return true;
+}
+
+bool Bank::withdrawFromAccount(int accountNumber, double amount) {
+    Account* account = findAccount(accountNumber);
+
+    if (account == nullptr) {
+        std::cout << "Account not found.\n";
+        return false;
+    }
+
+    return account->withdraw(amount);
+}
+
+void Bank::displayAccount(int accountNumber) const {
+    const Account* account = findAccount(accountNumber);
+
+    if (account == nullptr) {
+        std::cout << "Account not found.\n";
+        return;
+    }
+
+    account->display();
 }
 
 void Bank::displayAllAccounts() const {
