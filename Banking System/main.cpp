@@ -1,55 +1,52 @@
 #include <iostream>
-#include <vector>
 
-#include "Account.h"
-#include "SavingsAccount.h"
-#include "CheckingAccount.h"
+#include "Bank.h"
 
 int main() {
-    SavingsAccount savings(
-        1001,
-        "Diego Felipe",
+    Bank bank;
+
+    int savingsAccountNumber = bank.createSavingsAccount(
+        "Alice Johnson",
         1000.0,
         200.0
     );
 
-    CheckingAccount checking(
-        1002,
-        "Diego Felipe",
+    int checkingAccountNumber = bank.createCheckingAccount(
+        "Michael Smith",
         500.0,
         300.0
     );
 
-    std::vector<Account*> accounts;
+    std::cout << "Savings account created with account number: "
+        << savingsAccountNumber << '\n';
 
-    accounts.push_back(&savings);
-    accounts.push_back(&checking);
+    std::cout << "Checking account created with account number: "
+        << checkingAccountNumber << '\n';
 
-    std::cout << "=== Account Details ===\n";
+    bank.displayAllAccounts();
 
-    for (const Account* account : accounts) {
+    std::cout << "\n=== Account Search Test ===\n";
+
+    Account* account = bank.findAccount(savingsAccountNumber);
+
+    if (account != nullptr) {
+        std::cout << "Account found:\n";
         account->display();
     }
+    else {
+        std::cout << "Account not found.\n";
+    }
 
-    std::cout << "\n=== Savings Withdrawal Test ===\n";
+    std::cout << "\nSearching for account 9999...\n";
 
-    savings.withdraw(500.0);
-    savings.display();
+    account = bank.findAccount(9999);
 
-    std::cout << "\nAttempting withdrawal below minimum balance:\n";
-
-    savings.withdraw(400.0);
-    savings.display();
-
-    std::cout << "\n=== Checking Withdrawal Test ===\n";
-
-    checking.withdraw(700.0);
-    checking.display();
-
-    std::cout << "\nAttempting withdrawal beyond overdraft limit:\n";
-
-    checking.withdraw(200.0);
-    checking.display();
+    if (account != nullptr) {
+        account->display();
+    }
+    else {
+        std::cout << "Account not found.\n";
+    }
 
     return 0;
 }
