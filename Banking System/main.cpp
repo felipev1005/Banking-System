@@ -51,9 +51,10 @@ void displayMenu() {
     std::cout << "1. Create Account\n";
     std::cout << "2. Deposit Money\n";
     std::cout << "3. Withdraw Money\n";
-    std::cout << "4. View Account\n";
-    std::cout << "5. View All Accounts\n";
-    std::cout << "6. Exit\n";
+    std::cout << "4. Transfer Money\n";
+    std::cout << "5. View Account\n";
+    std::cout << "6. View All Accounts\n";
+    std::cout << "7. Exit\n";
     std::cout << "============================\n";
 }
 
@@ -157,6 +158,25 @@ void withdrawMoney(Bank& bank) {
     bank.withdrawFromAccount(accountNumber, amount);
 }
 
+void transferMoney(Bank& bank) {
+    std::cout << "\n=== Transfer Money ===\n";
+
+    int fromAccountNumber =
+        getIntegerInput("Enter source account number: ");
+
+    int toAccountNumber =
+        getIntegerInput("Enter destination account number: ");
+
+    double amount =
+        getDoubleInput("Enter transfer amount: $");
+
+    bank.transferMoney(
+        fromAccountNumber,
+        toAccountNumber,
+        amount
+    );
+}
+
 void viewAccount(const Bank& bank) {
     std::cout << "\n=== View Account ===\n";
 
@@ -190,20 +210,24 @@ int main() {
             break;
 
         case 4:
-            viewAccount(bank);
+            transferMoney(bank);
             break;
 
         case 5:
-            bank.displayAllAccounts();
+            viewAccount(bank);
             break;
 
         case 6:
+            bank.displayAllAccounts();
+            break;
+
+        case 7:
             std::cout << "\nThank you for using the Banking System.\n";
             running = false;
             break;
 
         default:
-            std::cout << "Invalid option. Please choose between 1 and 6.\n";
+            std::cout << "Invalid option. Please choose between 1 and 7.\n";
         }
     }
 

@@ -33,6 +33,12 @@ public:
     bool depositToAccount(int accountNumber, double amount);
     bool withdrawFromAccount(int accountNumber, double amount);
 
+    bool transferMoney(
+        int fromAccountNumber,
+        int toAccountNumber,
+        double amount
+    );
+
     void displayAccount(int accountNumber) const;
     void displayAllAccounts() const;
 };

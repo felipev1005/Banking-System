@@ -96,6 +96,47 @@ bool Bank::withdrawFromAccount(int accountNumber, double amount) {
     return account->withdraw(amount);
 }
 
+bool Bank::transferMoney(
+    int fromAccountNumber,
+    int toAccountNumber,
+    double amount
+) {
+    if (fromAccountNumber == toAccountNumber) {
+        std::cout << "Cannot transfer money to the same account.\n";
+        return false;
+    }
+
+    if (amount <= 0.0) {
+        std::cout << "Transfer amount must be greater than zero.\n";
+        return false;
+    }
+
+    Account* fromAccount = findAccount(fromAccountNumber);
+
+    if (fromAccount == nullptr) {
+        std::cout << "Source account not found.\n";
+        return false;
+    }
+
+    Account* toAccount = findAccount(toAccountNumber);
+
+    if (toAccount == nullptr) {
+        std::cout << "Destination account not found.\n";
+        return false;
+    }
+
+    if (!fromAccount->withdraw(amount)) {
+        std::cout << "Transfer failed.\n";
+        return false;
+    }
+
+    toAccount->deposit(amount);
+
+    std::cout << "Transfer completed successfully.\n";
+
+    return true;
+}
+
 void Bank::displayAccount(int accountNumber) const {
     const Account* account = findAccount(accountNumber);
 
