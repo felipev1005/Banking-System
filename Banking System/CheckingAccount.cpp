@@ -1,4 +1,5 @@
 #include "CheckingAccount.h"
+
 #include <iomanip>
 #include <iostream>
 
@@ -21,11 +22,18 @@ bool CheckingAccount::withdraw(double amount) {
     double remainingBalance = getBalance() - amount;
 
     if (remainingBalance < -overdraftLimit) {
-        std::cout << "Withdrawal denied. Overdraft limit exceeded.\n";
+        std::cout
+            << "Withdrawal denied. Overdraft limit exceeded.\n";
+
         return false;
     }
 
     setBalance(remainingBalance);
+
+    addTransaction(
+        "Withdrawal",
+        amount
+    );
 
     std::cout << "Withdrawal successful.\n";
 

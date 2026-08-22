@@ -1,9 +1,12 @@
 #include "Account.h"
+
 #include <iomanip>
 #include <iostream>
 
 Account::Account()
-    : accountNumber(0), holderName("Unknown"), balance(0.0) {
+    : accountNumber(0),
+    holderName("Unknown"),
+    balance(0.0) {
 }
 
 Account::Account(
@@ -28,8 +31,23 @@ double Account::getBalance() const {
     return balance;
 }
 
+const std::vector<Transaction>& Account::getTransactions() const {
+    return transactions;
+}
+
 void Account::setBalance(double newBalance) {
     balance = newBalance;
+}
+
+void Account::addTransaction(
+    const std::string& type,
+    double amount
+) {
+    transactions.emplace_back(
+        type,
+        amount,
+        balance
+    );
 }
 
 void Account::deposit(double amount) {
@@ -39,6 +57,12 @@ void Account::deposit(double amount) {
     }
 
     balance += amount;
+
+    addTransaction(
+        "Deposit",
+        amount
+    );
+
     std::cout << "Deposit successful.\n";
 }
 
@@ -54,6 +78,12 @@ bool Account::withdraw(double amount) {
     }
 
     balance -= amount;
+
+    addTransaction(
+        "Withdrawal",
+        amount
+    );
+
     std::cout << "Withdrawal successful.\n";
 
     return true;
@@ -65,4 +95,22 @@ void Account::display() const {
 
     std::cout << std::fixed << std::setprecision(2);
     std::cout << "Balance: $" << balance << '\n';
+}
+
+void Account::displayTransactionHistory() const {
+    std::cout << "\n=== Transaction History ===\n";
+    std::cout << "Account Number: " << accountNumber << '\n';
+    std::cout << "Holder Name: " << holderName << '\n';
+
+    if (transactions.empty()) {
+        std::cout << "No transactions available.\n";
+        return;
+    }
+
+    for (std::size_t i = 0; i < transactions.size(); ++i) {
+        std::cout << "\nTransaction #" << i + 1 << '\n';
+        std::cout << "----------------------\n";
+
+        transactions[i].display();
+    }
 }

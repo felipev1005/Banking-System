@@ -1,4 +1,5 @@
 #include "SavingsAccount.h"
+
 #include <iomanip>
 #include <iostream>
 
@@ -21,11 +22,18 @@ bool SavingsAccount::withdraw(double amount) {
     double remainingBalance = getBalance() - amount;
 
     if (remainingBalance < minimumBalance) {
-        std::cout << "Withdrawal denied. Minimum balance must be maintained.\n";
+        std::cout
+            << "Withdrawal denied. Minimum balance must be maintained.\n";
+
         return false;
     }
 
     setBalance(remainingBalance);
+
+    addTransaction(
+        "Withdrawal",
+        amount
+    );
 
     std::cout << "Withdrawal successful.\n";
 

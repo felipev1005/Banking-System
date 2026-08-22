@@ -6,6 +6,7 @@
 
 void clearInputBuffer() {
     std::cin.clear();
+
     std::cin.ignore(
         std::numeric_limits<std::streamsize>::max(),
         '\n'
@@ -23,7 +24,9 @@ int getIntegerInput(const std::string& prompt) {
             return value;
         }
 
-        std::cout << "Invalid input. Please enter a number.\n";
+        std::cout
+            << "Invalid input. Please enter a number.\n";
+
         clearInputBuffer();
     }
 }
@@ -39,7 +42,9 @@ double getDoubleInput(const std::string& prompt) {
             return value;
         }
 
-        std::cout << "Invalid input. Please enter a valid amount.\n";
+        std::cout
+            << "Invalid input. Please enter a valid amount.\n";
+
         clearInputBuffer();
     }
 }
@@ -53,8 +58,9 @@ void displayMenu() {
     std::cout << "3. Withdraw Money\n";
     std::cout << "4. Transfer Money\n";
     std::cout << "5. View Account\n";
-    std::cout << "6. View All Accounts\n";
-    std::cout << "7. Exit\n";
+    std::cout << "6. View Transaction History\n";
+    std::cout << "7. View All Accounts\n";
+    std::cout << "8. Exit\n";
     std::cout << "============================\n";
 }
 
@@ -67,7 +73,9 @@ void createAccount(Bank& bank) {
     std::getline(std::cin, holderName);
 
     if (holderName.empty()) {
-        std::cout << "Account holder name cannot be empty.\n";
+        std::cout
+            << "Account holder name cannot be empty.\n";
+
         return;
     }
 
@@ -75,13 +83,16 @@ void createAccount(Bank& bank) {
     std::cout << "1. Savings Account\n";
     std::cout << "2. Checking Account\n";
 
-    int accountType = getIntegerInput("Choose account type: ");
+    int accountType =
+        getIntegerInput("Choose account type: ");
 
     double initialBalance =
         getDoubleInput("Enter initial balance: $");
 
     if (initialBalance < 0.0) {
-        std::cout << "Initial balance cannot be negative.\n";
+        std::cout
+            << "Initial balance cannot be negative.\n";
+
         return;
     }
 
@@ -90,24 +101,31 @@ void createAccount(Bank& bank) {
             getDoubleInput("Enter minimum balance: $");
 
         if (minimumBalance < 0.0) {
-            std::cout << "Minimum balance cannot be negative.\n";
+            std::cout
+                << "Minimum balance cannot be negative.\n";
+
             return;
         }
 
         if (minimumBalance > initialBalance) {
             std::cout
                 << "Minimum balance cannot exceed initial balance.\n";
+
             return;
         }
 
-        int accountNumber = bank.createSavingsAccount(
-            holderName,
-            initialBalance,
-            minimumBalance
-        );
+        int accountNumber =
+            bank.createSavingsAccount(
+                holderName,
+                initialBalance,
+                minimumBalance
+            );
 
-        std::cout << "\nSavings account created successfully.\n";
-        std::cout << "Account Number: "
+        std::cout
+            << "\nSavings account created successfully.\n";
+
+        std::cout
+            << "Account Number: "
             << accountNumber << '\n';
     }
     else if (accountType == 2) {
@@ -115,18 +133,24 @@ void createAccount(Bank& bank) {
             getDoubleInput("Enter overdraft limit: $");
 
         if (overdraftLimit < 0.0) {
-            std::cout << "Overdraft limit cannot be negative.\n";
+            std::cout
+                << "Overdraft limit cannot be negative.\n";
+
             return;
         }
 
-        int accountNumber = bank.createCheckingAccount(
-            holderName,
-            initialBalance,
-            overdraftLimit
-        );
+        int accountNumber =
+            bank.createCheckingAccount(
+                holderName,
+                initialBalance,
+                overdraftLimit
+            );
 
-        std::cout << "\nChecking account created successfully.\n";
-        std::cout << "Account Number: "
+        std::cout
+            << "\nChecking account created successfully.\n";
+
+        std::cout
+            << "Account Number: "
             << accountNumber << '\n';
     }
     else {
@@ -138,37 +162,57 @@ void depositMoney(Bank& bank) {
     std::cout << "\n=== Deposit Money ===\n";
 
     int accountNumber =
-        getIntegerInput("Enter account number: ");
+        getIntegerInput(
+            "Enter account number: "
+        );
 
     double amount =
-        getDoubleInput("Enter deposit amount: $");
+        getDoubleInput(
+            "Enter deposit amount: $"
+        );
 
-    bank.depositToAccount(accountNumber, amount);
+    bank.depositToAccount(
+        accountNumber,
+        amount
+    );
 }
 
 void withdrawMoney(Bank& bank) {
     std::cout << "\n=== Withdraw Money ===\n";
 
     int accountNumber =
-        getIntegerInput("Enter account number: ");
+        getIntegerInput(
+            "Enter account number: "
+        );
 
     double amount =
-        getDoubleInput("Enter withdrawal amount: $");
+        getDoubleInput(
+            "Enter withdrawal amount: $"
+        );
 
-    bank.withdrawFromAccount(accountNumber, amount);
+    bank.withdrawFromAccount(
+        accountNumber,
+        amount
+    );
 }
 
 void transferMoney(Bank& bank) {
     std::cout << "\n=== Transfer Money ===\n";
 
     int fromAccountNumber =
-        getIntegerInput("Enter source account number: ");
+        getIntegerInput(
+            "Enter source account number: "
+        );
 
     int toAccountNumber =
-        getIntegerInput("Enter destination account number: ");
+        getIntegerInput(
+            "Enter destination account number: "
+        );
 
     double amount =
-        getDoubleInput("Enter transfer amount: $");
+        getDoubleInput(
+            "Enter transfer amount: $"
+        );
 
     bank.transferMoney(
         fromAccountNumber,
@@ -181,9 +225,25 @@ void viewAccount(const Bank& bank) {
     std::cout << "\n=== View Account ===\n";
 
     int accountNumber =
-        getIntegerInput("Enter account number: ");
+        getIntegerInput(
+            "Enter account number: "
+        );
 
     bank.displayAccount(accountNumber);
+}
+
+void viewTransactionHistory(const Bank& bank) {
+    std::cout
+        << "\n=== View Transaction History ===\n";
+
+    int accountNumber =
+        getIntegerInput(
+            "Enter account number: "
+        );
+
+    bank.displayTransactionHistory(
+        accountNumber
+    );
 }
 
 int main() {
@@ -194,7 +254,10 @@ int main() {
     while (running) {
         displayMenu();
 
-        int choice = getIntegerInput("Choose an option: ");
+        int choice =
+            getIntegerInput(
+                "Choose an option: "
+            );
 
         switch (choice) {
         case 1:
@@ -218,16 +281,23 @@ int main() {
             break;
 
         case 6:
-            bank.displayAllAccounts();
+            viewTransactionHistory(bank);
             break;
 
         case 7:
-            std::cout << "\nThank you for using the Banking System.\n";
+            bank.displayAllAccounts();
+            break;
+
+        case 8:
+            std::cout
+                << "\nThank you for using the Banking System.\n";
+
             running = false;
             break;
 
         default:
-            std::cout << "Invalid option. Please choose between 1 and 7.\n";
+            std::cout
+                << "Invalid option. Please choose between 1 and 8.\n";
         }
     }
 

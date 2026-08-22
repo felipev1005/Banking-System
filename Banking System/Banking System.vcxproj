@@ -127,6 +127,7 @@
     <ClInclude Include="Bank.h" />
     <ClInclude Include="CheckingAccount.h" />
     <ClInclude Include="SavingsAccount.h" />
+    <ClInclude Include="Transaction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="CheckingAccount.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SavingsAccount.cpp" />
+    <ClCompile Include="Transaction.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

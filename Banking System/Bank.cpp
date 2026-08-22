@@ -67,7 +67,10 @@ const Account* Bank::findAccount(int accountNumber) const {
     return nullptr;
 }
 
-bool Bank::depositToAccount(int accountNumber, double amount) {
+bool Bank::depositToAccount(
+    int accountNumber,
+    double amount
+) {
     Account* account = findAccount(accountNumber);
 
     if (account == nullptr) {
@@ -76,7 +79,9 @@ bool Bank::depositToAccount(int accountNumber, double amount) {
     }
 
     if (amount <= 0.0) {
-        std::cout << "Deposit amount must be greater than zero.\n";
+        std::cout
+            << "Deposit amount must be greater than zero.\n";
+
         return false;
     }
 
@@ -85,7 +90,10 @@ bool Bank::depositToAccount(int accountNumber, double amount) {
     return true;
 }
 
-bool Bank::withdrawFromAccount(int accountNumber, double amount) {
+bool Bank::withdrawFromAccount(
+    int accountNumber,
+    double amount
+) {
     Account* account = findAccount(accountNumber);
 
     if (account == nullptr) {
@@ -102,23 +110,29 @@ bool Bank::transferMoney(
     double amount
 ) {
     if (fromAccountNumber == toAccountNumber) {
-        std::cout << "Cannot transfer money to the same account.\n";
+        std::cout
+            << "Cannot transfer money to the same account.\n";
+
         return false;
     }
 
     if (amount <= 0.0) {
-        std::cout << "Transfer amount must be greater than zero.\n";
+        std::cout
+            << "Transfer amount must be greater than zero.\n";
+
         return false;
     }
 
-    Account* fromAccount = findAccount(fromAccountNumber);
+    Account* fromAccount =
+        findAccount(fromAccountNumber);
 
     if (fromAccount == nullptr) {
         std::cout << "Source account not found.\n";
         return false;
     }
 
-    Account* toAccount = findAccount(toAccountNumber);
+    Account* toAccount =
+        findAccount(toAccountNumber);
 
     if (toAccount == nullptr) {
         std::cout << "Destination account not found.\n";
@@ -132,7 +146,8 @@ bool Bank::transferMoney(
 
     toAccount->deposit(amount);
 
-    std::cout << "Transfer completed successfully.\n";
+    std::cout
+        << "Transfer completed successfully.\n";
 
     return true;
 }
@@ -146,6 +161,20 @@ void Bank::displayAccount(int accountNumber) const {
     }
 
     account->display();
+}
+
+void Bank::displayTransactionHistory(
+    int accountNumber
+) const {
+    const Account* account =
+        findAccount(accountNumber);
+
+    if (account == nullptr) {
+        std::cout << "Account not found.\n";
+        return;
+    }
+
+    account->displayTransactionHistory();
 }
 
 void Bank::displayAllAccounts() const {

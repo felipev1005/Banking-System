@@ -30,8 +30,15 @@ public:
     Account* findAccount(int accountNumber);
     const Account* findAccount(int accountNumber) const;
 
-    bool depositToAccount(int accountNumber, double amount);
-    bool withdrawFromAccount(int accountNumber, double amount);
+    bool depositToAccount(
+        int accountNumber,
+        double amount
+    );
+
+    bool withdrawFromAccount(
+        int accountNumber,
+        double amount
+    );
 
     bool transferMoney(
         int fromAccountNumber,
@@ -40,6 +47,11 @@ public:
     );
 
     void displayAccount(int accountNumber) const;
+
+    void displayTransactionHistory(
+        int accountNumber
+    ) const;
+
     void displayAllAccounts() const;
 };
 
